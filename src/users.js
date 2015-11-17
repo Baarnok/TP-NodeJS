@@ -8,9 +8,9 @@ module.exports = {
 		callback(name);
 	},
 	get: function (id, callback) {
-		// Gat a user
+		// Get a user
 		var user = {
-			name: "nicolas",
+			name: "francois",
 			id: id
 		}
 		callback(id);
