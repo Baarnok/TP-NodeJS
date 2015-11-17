@@ -1,1 +1,26 @@
 // Package.json
+{
+  "name": "TP-NodeJS",
+  "description": "class @ ece",
+  "version": "0.0.1",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Baarnok/TP-NodeJS.git"
+  },
+  "contributors": {
+    "1": {
+      "name": "François Cordier",
+      "email": "francois_cordier@yahoo.fr"
+    },
+    "2": {
+      "name": "Baptiste Roy",
+      "email": "roy-baptiste@hotmail.fr"
+    }
+  },
+  "dependencies": {
+    "mymodule": "*",
+  },
+  "devDependencies": {
+    "test-module": "*"
+  }
+}
