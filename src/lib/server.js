@@ -7,7 +7,7 @@ http.createServer(function (req, res) {
 
 	if (path[0] == "get") {
 		users.get(path[1], function (user) {
-			var response = { 
+			var response = {
 				info: "here's your user !",
 				user: user
 			}
