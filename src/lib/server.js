@@ -1,9 +1,10 @@
 var http = require('http');
 var users = require('./users.js');
+//var url = require('url');
 
 http.createServer(function (req, res) {
 
-	var path = req.url.split("]").splice(1, 2)
+	var path = req.url.split("/").splice(1, 2)
 
 	if (path[0] == "get") {
 		users.get(path[1], function (user) {
