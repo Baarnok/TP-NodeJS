@@ -5,14 +5,25 @@ block head
     script(src="/js/bootstrap.min.js")
     link(rel="stylesheet", href="/css/bootstrap.min.css")
 
-block content
-  div.container
-    form.form-horizontal(action='/login', method="post")
-      .form-group
-        label Username
-        input.form-control(type="text", placeholder="Please enter your name")
-      .form-group
-        label Passord
-        input.form-control(type="password", placeholder="Please enter your password")
-      button.btn.btn-success(type="submit") Connect
-      button.btn.btn-primary(type="submit") Create Account
+    header
+      .container
+        .jumbotron
+          h3.text-center Dashboard application - CORDIER Fran&#231;ois and ROY Baptiste
+    main
+      .container
+        .row.col-lg-12.col-lg-offset-4
+          form.form-horizontal
+            .row
+              .form-group.col-lg-4
+                label(for="username") Username
+                input.form-control(type="name", placeholder="Please enter your name")
+            .row
+              .form-group.col-lg-4
+                label(for="password") Password
+                input.form-control(type="password", placeholder="Please enter your password")
+            .row
+              .form-group.col-lg-4
+                button.btn.btn-primary.col-lg-12(type="submit") Connect
+            .row
+              .form-group.col-lg-4
+                button.btn.btn-success.col-lg-12(type="submit") Create an account
