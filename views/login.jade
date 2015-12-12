@@ -6,9 +6,15 @@ block head
     link(rel="stylesheet", href="/css/bootstrap.min.css")
 
     header
-      .container
-        .jumbotron
-          h3.text-center Dashboard application - CORDIER Fran&#231;ois and ROY Baptiste
+      nav.navbar.navbar-inverse
+        .container-fluid
+          .navbar-header
+            a.navbar-brand DashBoard - NodeJS
+          ul.nav.navbar-nav.navbar-right
+            li.active
+              a(href="/login") Log in
+            li
+              a(href="/signup") Sign up
     main
       .container
         .row.col-lg-12.col-lg-offset-4
