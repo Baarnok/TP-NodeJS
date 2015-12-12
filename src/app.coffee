@@ -19,8 +19,8 @@ app.use session
   resave: true
   saveUninitialized: true
 
-app.get '/login', (req, res) ->
-  res.render 'index',
+app.get '/', (req, res) ->
+  res.render 'login',
     locals:
       title: 'My ECE test page'
 
