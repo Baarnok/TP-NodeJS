@@ -1,0 +1,18 @@
+extends layout
+
+block head
+    script(src="/js/jquery-2.1.4.min.js")
+    script(src="/js/bootstrap.min.js")
+    link(rel="stylesheet", href="/css/bootstrap.min.css")
+
+block content
+  div.container
+    form.form-horizontal(action='/login', method="post")
+      .form-group
+        label Username
+        input.form-control(type="text", placeholder="Please enter your name")
+      .form-group
+        label Passord
+        input.form-control(type="password", placeholder="Please enter your password")
+      button.btn.btn-success(type="submit") Connect
+      button.btn.btn-primary(type="submit") Create Account
