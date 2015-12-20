@@ -25,10 +25,10 @@ authCheck = (req, res, next) ->
 app.get '/', authCheck, (req, res) ->
   res.render 'index', name: req.session.username
 
-app.get '/addMetric', (req, res) ->
+app.get '/addmetric', (req, res) ->
   res.render 'addMetric', name: req.session.username
 
-app.post '/addMetric', (req, res) ->
+app.post '/addmetric', (req, res) ->
   metrics.saveNew req.session.username, req.body.timestamp, req.body.value, (err, data) ->
     if err then throw error
     else
