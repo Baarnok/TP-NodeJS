@@ -36,3 +36,9 @@ db/sessions/CURRENT
 db/metrics/MANIFEST-000004
 
 db/metrics/LOG
+
+db/metrics/MANIFEST-000011
+
+db/sessions/MANIFEST-000013
+
+db/user/MANIFEST-000011
