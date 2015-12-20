@@ -1,72 +1,94 @@
 extend layout
+block content
+  header
+    nav.navbar.navbar-inverse
+      .container-fluid
+        .navbar-header
+          a(href="/").navbar-brand DashBoard - NodeJS
+        ul.nav.navbar-nav.navbar-right
+          li.active
+            a(href="/") Home - #{name}
+          li
+            a(href="/logout") Log out
 
-block head
-  script(src="/js/jquery-2.1.4.min.js")
-  script(src="/js/bootstrap.min.js")
-  link(rel="stylesheet", href="/css/bootstrap.min.css")
+    .container
+      .row.col-lg-4
+        // Partie gauche de la page avec les différents boutons pour les graphes
+        .row
+          .col-lg-12
+            h3 Please select the kind of graph you want to display
+        .row
+          .col-lg-12
+            h4 Histogram
+            p.col-lg-offset-1 Click here to obtain the metrics displayed in an histogram
+            button.btn.btn-success.col-lg-offset-1#get-metrics Show graph
+        .row
+          .col-lg-12
+            h4 Dot cloud
+            p.col-lg-offset-1 Click here to obtain the metrics displayed as a dot cloud
+            button.btn.btn-success.col-lg-offset-1 Show graph
+        .row
+          .col-lg-12
+            h4 Add metrics
+            p.col-lg-offset-1 Click here to add metric
+            form#addMetric(action='/addMetric', method='get')
+              button.btn.btn-primary.col-lg-offset-1(type='submit') Add metrics
+      // End of the title row, begining of the list of possibility
+      .row.col-lg-8
+        .row
+          h3.col-lg-offset-7 Here's your graph
+          #graph.aGraph.col-lg-offset-2
+          #metrics
 
-  #form
-      h1= title
-      p Welcome to #{title}
-      form(action='/metric')
-        input#metric_id(name='metric')
-        input#metric_ok(type='submit', value='OK')
-      button.btn.btn-info(href='/logout' onClick='document.location.href="/logout"') Logout
 
     script
-    :coffee-script
-      $('#metric_ok').click (e) ->
-        e.preventDefault()
-        id = $('#metric_id').val()
-        $.getJSON "/metric/#{id}.json", {}, (data) ->
+      :coffee-script
+        $('#get-metrics').one 'click', (e) ->
+          e.preventDefault()
+          $.getJSON '/metrics.json', (metrics) ->
+            $('#content').empty()
+            showGraph metrics
 
-          console.log data.values
+        showGraph = (metrics) ->
+          $('#graph.aGraph').append
+          margin =
+            top: 20
+            right: 20
+            bottom: 30
+            left: 40
+          width = 800 - (margin.left) - (margin.right)
+          height = 400 - (margin.top) - (margin.bottom)
+          x = d3.scale.ordinal().rangeRoundBands([
+            0
+            width
+          ], .1)
+          y = d3.scale.linear().range([
+            height
+            0
+          ])
+          xAxis = d3.svg.axis().scale(x).orient('bottom')
+          yAxis = d3.svg.axis().scale(y).orient('left')
+          svg = d3.select('#graph').append('svg').attr('width', width + margin.left + margin.right).attr('height', height + margin.top + margin.bottom).append('g').attr('transform', 'translate(' + margin.left + ',' + margin.top + ')')
 
-          metrics = data.values
+          type = (d) ->
+            d.value = +d.value
+            d
 
-          margin = {top: 20, right: 20, bottom: 30, left: 50}
-          width = 800 - margin.left - margin.right
-          height = 400 - margin.top - margin.bottom
+          x.domain metrics.map((d) ->
+            d.timestamp
+          )
+          y.domain [
+            0
+            d3.max(metrics, (d) ->
+              d.value
+            )
+          ]
 
-          x = d3.time.scale().range [0, width]
-          y = d3.scale.linear().range [height, 0]
-          xAxis = d3.svg.axis().scale(x).orient "bottom"
-          yAxis = d3.svg.axis().scale(y).orient "left"
-
-          area = d3.svg.area()
-            .x (m) ->
-              return x m.timestamp
-            .y0(height)
-            .y1 (m) ->
-              return y m.value
-
-          svg = d3.select("#graph").append("svg")
-              .attr("width", width + margin.left + margin.right)
-              .attr("height", height + margin.top + margin.bottom)
-            .append("g")
-              .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
-
-          x.domain d3.extent metrics, (m) ->
-            return m.timestamp
-          y.domain [0, d3.max metrics, (m) ->
-            return m.value]
-
-          svg.append("path")
-              .datum(metrics)
-              .attr("class", "area")
-              .attr("d", area)
-
-          svg.append("g")
-              .attr("class", "x axis")
-              .attr("transform", "translate(0, " + height + ")")
-              .call(xAxis)
-              .append("text")
-                .text("Time")
-
-          svg.append("g")
-              .attr("class", "y axis")
-              .call(yAxis)
-              .append("text")
-                .attr("transform", "rotate(-90)")
-                .style("text-anchor", "end")
-                .text("Value")
+          svg.append('g').attr('class', 'x axis').attr('transform', 'translate(0,' + height + ')').call xAxis
+          svg.append('g').attr('class', 'y axis').call(yAxis).append('text').attr('transform', 'rotate(-90)').attr('y', 6).attr('dy', '.71em').style('text-anchor', 'end').text 'Value'
+          svg.selectAll('.bar').data(metrics).enter().append('rect').attr('class', 'bar').attr('x', (d) ->
+            x d.timestamp
+          ).attr('width', x.rangeBand()).attr('y', (d) ->
+            y d.value
+          ).attr 'height', (d) ->
+            height - y(d.value)

@@ -1,15 +1,10 @@
-extends layout
-
-block head
-    script(src="/js/jquery-2.1.4.min.js")
-    script(src="/js/bootstrap.min.js")
-    link(rel="stylesheet", href="/css/bootstrap.min.css")
-
+extend layout
+block content
     header
       nav.navbar.navbar-inverse
         .container-fluid
           .navbar-header
-            a.navbar-brand DashBoard - NodeJS
+            a(href="/login").navbar-brand DashBoard - NodeJS
           ul.nav.navbar-nav.navbar-right
             li.active
               a(href="/login") Log in
@@ -17,19 +12,28 @@ block head
               a(href="/signup") Sign up
     main
       .container
-        .row.col-lg-12.col-lg-offset-4
-          form.form-horizontal
+        .row.col-lg-8.col-lg-offset-4
+          form(action='/login', method="post").form-horizontal
             .row
-              .form-group.col-lg-4
+              .form-group.col-lg-6
+                h2.text-center Please sign in
+            .row
+              .form-group.col-lg-6
                 label(for="username") Username
-                input.form-control(type="name", placeholder="Please enter your name")
+                .input-group
+                  span.input-group-addon
+                    span.glyphicon.glyphicon-user
+                  input.form-control(type="text", name="username", required="required", placeholder="Please enter your username")
             .row
-              .form-group.col-lg-4
+              .form-group.col-lg-6
                 label(for="password") Password
-                input.form-control(type="password", placeholder="Please enter your password")
+                .input-group
+                  span.input-group-addon
+                    span.glyphicon.glyphicon-lock
+                  input.form-control(type="password", name="password", required="required", placeholder="Please enter your password")
             .row
-              .form-group.col-lg-4
+              .form-group.col-lg-6
                 button.btn.btn-primary.col-lg-12(type="submit") Connect
             .row
-              .form-group.col-lg-4
-                button.btn.btn-success.col-lg-12(type="submit") Create an account
+              .form-group.col-lg-6
+                a.button.btn.btn-success.col-lg-12(href="/signup") Create an account

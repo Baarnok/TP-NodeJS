@@ -1,15 +1,15 @@
-user = require('./db') "#{__dirname}/../db/user"
-
+db = require('./db') "#{__dirname}/../db/user"
 module.exports =
   get: (username, callback) ->
-    user = {}
     rs = db.createReadStream
-      start: "user:#{username}"
-      stop: "user:#{username}"
+      gte: "user:#{username}"
+      lte: "user:#{username}"
+    user =null
     rs.on 'data', (data) ->
-      [_, _username] = data.key.split ':'
-      [_password, _name, _email] = data.value.split ':'
-      user = username : _username, password: _password, name: _name, email: _email if _username == username
+      key = data.key.split ":"
+      properties = data.value.split ":"
+      user = {username : key[1], password:properties[1], name:properties[2],email:properties[3]}
+      return user
     rs.on 'error', callback
     rs.on 'close', ->
       callback null, user
@@ -18,17 +18,9 @@ module.exports =
     ws = db.createWriteStream()
     ws.on 'error', callback
     ws.on 'close', callback
-    ws.write key: "user:#{username}", value: "#{password}:#{name}:#{email}"
+    ws.write key: "user:#{username}", value: "user:#{password}:#{name}:#{email}"
     ws.end()
 
-  remove: (username, callback) ->
-    ws = db.createWriteStream type: 'del'
-    ws.on 'error', callback
-    ws.on 'close', callback
-    ks = db.createKeyStream()
-    ks.on 'close', ->
-            ws.end()
-    ks.on 'data', (data) ->
-      [_, _username] = data.split ':'
-      if _username == username
-        ws.write key: "#{data}"
+  remove: (username, callback)->
+    toDel = "user:#{username}"
+    db.del(username, callback)

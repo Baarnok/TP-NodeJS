@@ -1,5 +1,5 @@
 {
-  "name": "Projet NodeJS",
+  "name": "Projet-NodeJS",
   "version": "1.0.0",
   "description": "",
   "main": "lib/app.js",
@@ -21,6 +21,7 @@
     "level-ws": "0.0.0",
     "leveldown": "^1.4.2",
     "levelup": "^1.3.1",
+    "morgan": "*",
     "nodemon": "^1.8.1",
     "stylus": "*"
   },

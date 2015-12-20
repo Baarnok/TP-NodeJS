@@ -1,48 +1,56 @@
 extends layout
-
-block head
-    script(src="/js/jquery-2.1.4.min.js")
-    script(src="/js/bootstrap.min.js")
-    link(rel="stylesheet", href="/css/bootstrap.min.css")
-
+block content
     header
       nav.navbar.navbar-inverse
         .container-fluid
           .navbar-header
-            a.navbar-brand DashBoard - NodeJS
+            a(href="/login").navbar-brand DashBoard - NodeJS
           ul.nav.navbar-nav.navbar-right
             li
               a(href="/login") Log in
             li.active
-              a(href="/singup") Sign up
+              a(href="/signup") Sign up
 
       main
         .container
           .row.col-lg-8.col-lg-offset-4
-            form.form-horizontal
+            form(action='/signup', method="post").form-horizontal
               .row
                 .form-group.col-lg-6
                   h2.text-center Create a new account
               .row
                 .form-group.col-lg-6.alert.alert-info(role="alert")
                   p
-                    | Registering for this site will create you a new user account. Then you have to connect yourself
+                    span.glyphicon.glyphicon-info-sign
+                    |  Registering for this site will create you a new user account. Then you have to connect yourself
               .row
                 .form-group.col-lg-6
                   label(for="username") Username
-                  input.form-control(type="name", placeholder="Please enter your name")
+                  .input-group
+                    span.input-group-addon
+                      span.glyphicon.glyphicon-user
+                    input.form-control(type="text", name="username", required="required", placeholder="Please enter your username")
+              .row
+                .form-group.col-lg-6
+                  label(for="name") Name
+                  .input-group
+                    span.input-group-addon
+                      span.glyphicon.glyphicon-tag
+                    input.form-control(type="text", name="name", required="required", placeholder="Please enter your name")
               .row
                 .form-group.col-lg-6
                   label(for="email") Email
-                  input.form-control(type="email", placeholder="Please enter your email")
+                  .input-group
+                    span.input-group-addon
+                      span.glyphicon.glyphicon-envelope
+                    input.form-control(type="email", name="email", required="required", placeholder="Please enter your email")
               .row
                 .form-group.col-lg-6
                   label(for="password") Password
-                  input.form-control(type="password", placeholder="Please enter your password")
-              .row
-                .form-group.col-lg-6
-                  label(for="confirmpassword") Confirm your password
-                  input.form-control(type="password", placeholder="Please confirm your password")
+                  .input-group
+                    span.input-group-addon
+                      span.glyphicon.glyphicon-lock
+                    input.form-control(type="password", name="password", required="required", placeholder="Please enter your password")
               .row
                 .form-group.col-lg-6
                   button.btn.btn-success.col-lg-12(type="submit") Create an account

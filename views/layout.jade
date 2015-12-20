@@ -1,6 +1,12 @@
-doctype html 
-head 
+doctype html
+head
   title #{locals.title}
   block head
-body 
+    script(src="/js/jquery-2.1.4.min.js")
+    script(src="/js/d3.min.js")
+    script(src="/js/bootstrap.min.js")
+    link(rel="stylesheet", href="/css/bootstrap.min.css")
+    link(rel="stylesheet", href="/css/style.css")
+    link(rel="stylesheet", href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css", integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==", crossorigin="anonymous")
+body
   block content

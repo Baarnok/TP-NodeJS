@@ -1,0 +1,39 @@
+extend layout
+block content
+  header
+    nav.navbar.navbar-inverse
+      .container-fluid
+        .navbar-header
+          a(href="/").navbar-brand DashBoard - NodeJS
+        ul.nav.navbar-nav.navbar-right
+          li.active
+            a(href="/addMetric") Add metric
+          li
+            a(href="/") Home - #{name}
+          li
+            a(href="/logout") Log out
+
+  main
+    .container
+      .row.col-lg-8.col-lg-offset-4
+        form(action='/addMetric', method="post").form-horizontal
+          .row
+            .form-group.col-lg-6
+              h2.text-center Add a new metric
+          .row
+            .form-group.col-lg-6
+              label(for="timestamp") Timestamp
+              .input-group
+                span.input-group-addon
+                  span.glyphicon.glyphicon-calendar
+                input.form-control(type="date", name="timestamp", required="required", placeholder="Please enter the date of the metric")
+          .row
+            .form-group.col-lg-6
+              label(for="value") Value
+              .input-group
+                span.input-group-addon
+                  span.glyphicon.glyphicon-share-alt
+                input.form-control(type="number", name="value", required="required", placeholder="Please enter the value of the metric")
+          .row
+            .form-group.col-lg-6
+              button.btn.btn-primary.col-lg-12(type="submi") Add
