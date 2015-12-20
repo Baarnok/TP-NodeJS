@@ -20,10 +20,6 @@ Two accounts with metrics are already saved :
 
 ## About this work
 
-This work is part of the continuous assessment of the ECE Asynchronous Technology
-Class and will be the basis for your final project. Your final grade will be
-calculated based on the final project’s result and your Git’s history.
-
 The project in itself is a simple web dashboard that should allow you to :
 
 - Login with a user
