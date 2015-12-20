@@ -36,15 +36,15 @@ met = [
       [
           {
             timestamp: new Date('2015-12-01 10:35 UTC').getTime(),
-            value: 44
+            value: 10
           },
           {
             timestamp: new Date('2015-12-01 10:40 UTC').getTime(),
-            value: 46
+            value: 22
           },
           {
             timestamp: new Date('2015-12-01 10:45 UTC').getTime(),
-            value: 47
+            value: 12
           }
       ]
   }

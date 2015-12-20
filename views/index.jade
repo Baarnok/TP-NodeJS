@@ -41,54 +41,54 @@ block content
           #metrics
 
 
-    script
-      :coffee-script
-        $('#get-metrics').one 'click', (e) ->
-          e.preventDefault()
-          $.getJSON '/metrics.json', (metrics) ->
-            $('#content').empty()
-            showGraph metrics
+      script
+        :coffee-script
+          $('#get-metrics').one 'click', (e) ->
+            e.preventDefault()
+            $.getJSON '/metrics.json', (metrics) ->
+              $('#content').empty()
+              showGraph metrics
 
-        showGraph = (metrics) ->
-          $('#graph.aGraph').append
-          margin =
-            top: 20
-            right: 20
-            bottom: 30
-            left: 40
-          width = 800 - (margin.left) - (margin.right)
-          height = 400 - (margin.top) - (margin.bottom)
-          x = d3.scale.ordinal().rangeRoundBands([
-            0
-            width
-          ], .1)
-          y = d3.scale.linear().range([
-            height
-            0
-          ])
-          xAxis = d3.svg.axis().scale(x).orient('bottom')
-          yAxis = d3.svg.axis().scale(y).orient('left')
-          svg = d3.select('#graph').append('svg').attr('width', width + margin.left + margin.right).attr('height', height + margin.top + margin.bottom).append('g').attr('transform', 'translate(' + margin.left + ',' + margin.top + ')')
+          showGraph = (metrics) ->
+            $('#graph.aGraph').append
+            margin =
+              top: 20
+              right: 20
+              bottom: 30
+              left: 40
+            width = 800 - (margin.left) - (margin.right)
+            height = 400 - (margin.top) - (margin.bottom)
+            x = d3.scale.ordinal().rangeRoundBands([
+              0
+              width
+            ], .1)
+            y = d3.scale.linear().range([
+              height
+              0
+            ])
+            xAxis = d3.svg.axis().scale(x).orient('bottom')
+            yAxis = d3.svg.axis().scale(y).orient('left')
+            svg = d3.select('#graph').append('svg').attr('width', width + margin.left + margin.right).attr('height', height + margin.top + margin.bottom).append('g').attr('transform', 'translate(' + margin.left + ',' + margin.top + ')')
 
-          type = (d) ->
-            d.value = +d.value
-            d
+            type = (d) ->
+              d.value = +d.value
+              d
 
-          x.domain metrics.map((d) ->
-            d.timestamp
-          )
-          y.domain [
-            0
-            d3.max(metrics, (d) ->
-              d.value
+            x.domain metrics.map((d) ->
+              d.timestamp
             )
-          ]
+            y.domain [
+              0
+              d3.max(metrics, (d) ->
+                d.value
+              )
+            ]
 
-          svg.append('g').attr('class', 'x axis').attr('transform', 'translate(0,' + height + ')').call xAxis
-          svg.append('g').attr('class', 'y axis').call(yAxis).append('text').attr('transform', 'rotate(-90)').attr('y', 6).attr('dy', '.71em').style('text-anchor', 'end').text 'Value'
-          svg.selectAll('.bar').data(metrics).enter().append('rect').attr('class', 'bar').attr('x', (d) ->
-            x d.timestamp
-          ).attr('width', x.rangeBand()).attr('y', (d) ->
-            y d.value
-          ).attr 'height', (d) ->
-            height - y(d.value)
+            svg.append('g').attr('class', 'x axis').attr('transform', 'translate(0,' + height + ')').call xAxis
+            svg.append('g').attr('class', 'y axis').call(yAxis).append('text').attr('transform', 'rotate(-90)').attr('y', 6).attr('dy', '.71em').style('text-anchor', 'end').text 'Value'
+            svg.selectAll('.bar').data(metrics).enter().append('rect').attr('class', 'bar').attr('x', (d) ->
+              x d.timestamp
+            ).attr('width', x.rangeBand()).attr('y', (d) ->
+              y d.value
+            ).attr 'height', (d) ->
+              height - y(d.value)
