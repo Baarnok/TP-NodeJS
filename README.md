@@ -9,6 +9,7 @@ Tests are developed using [mocha](http://mochajs.org/) and [should](http://shoul
 Before anything : `npm install` && `chmod 755 bin/*`
 
 - `./bin/build` to compile the coffee code to javascript
+- Create a folder db/ at root directory
 - `./bin/populatedb` to add some metrics in the db
 - `./bin/test` to run the tests
 - `./bin/start` to run the code or `sudo ./bin/start` if there's an error about accessing files
